@@ -1,0 +1,1002 @@
+[
+  {
+    "id": "mk_core_1",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "core",
+    "name": "Core MK 1",
+    "sortKey": "01",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_core_2",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "core",
+    "name": "Core MK 2",
+    "sortKey": "02",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_core_3",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "core",
+    "name": "Core MK 3",
+    "sortKey": "03",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_core_4",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "core",
+    "name": "Core MK 4",
+    "sortKey": "04",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_core_5",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "core",
+    "name": "Core MK 5",
+    "sortKey": "05",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_core_6",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "core",
+    "name": "Core MK 6",
+    "sortKey": "06",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_core_7",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "core",
+    "name": "Core MK 7",
+    "sortKey": "07",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_core_8",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "core",
+    "name": "Core MK 8",
+    "sortKey": "08",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_core_9",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "core",
+    "name": "Core MK 9",
+    "sortKey": "09",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_core_10",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "core",
+    "name": "Core MK 10",
+    "sortKey": "10",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_bonus_1",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "bonus",
+    "name": "Bonus MK 1",
+    "sortKey": "01",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_bonus_2",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "bonus",
+    "name": "Bonus MK 2",
+    "sortKey": "02",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_bonus_3",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "bonus",
+    "name": "Bonus MK 3",
+    "sortKey": "03",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_bonus_4",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "bonus",
+    "name": "Bonus MK 4",
+    "sortKey": "04",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_bonus_5",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "bonus",
+    "name": "Bonus MK 5",
+    "sortKey": "05",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_bonus_6",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "bonus",
+    "name": "Bonus MK 6",
+    "sortKey": "06",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_bonus_7",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "bonus",
+    "name": "Bonus MK 7",
+    "sortKey": "07",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_bonus_8",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "bonus",
+    "name": "Bonus MK 8",
+    "sortKey": "08",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_bonus_9",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "bonus",
+    "name": "Bonus MK 9",
+    "sortKey": "09",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_bonus_10",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "bonus",
+    "name": "Bonus MK 10",
+    "sortKey": "10",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_bonus_11",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "bonus",
+    "name": "Bonus MK 11",
+    "sortKey": "11",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_bonus_12",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "bonus",
+    "name": "Bonus MK 12",
+    "sortKey": "12",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_bonus_13",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "bonus",
+    "name": "Bonus MK 13",
+    "sortKey": "13",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_bonus_14",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "bonus",
+    "name": "Bonus MK 14",
+    "sortKey": "14",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "mk_bonus_15",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "bonus",
+    "name": "Bonus MK 15",
+    "sortKey": "15",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_core_1",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "core",
+    "name": "Core EP 1",
+    "sortKey": "01",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_core_2",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "core",
+    "name": "Core EP 2",
+    "sortKey": "02",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_core_3",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "core",
+    "name": "Core EP 3",
+    "sortKey": "03",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_core_4",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "core",
+    "name": "Core EP 4",
+    "sortKey": "04",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_core_5",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "core",
+    "name": "Core EP 5",
+    "sortKey": "05",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_core_6",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "core",
+    "name": "Core EP 6",
+    "sortKey": "06",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_core_7",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "core",
+    "name": "Core EP 7",
+    "sortKey": "07",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_core_8",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "core",
+    "name": "Core EP 8",
+    "sortKey": "08",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_core_9",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "core",
+    "name": "Core EP 9",
+    "sortKey": "09",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_core_10",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "core",
+    "name": "Core EP 10",
+    "sortKey": "10",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_bonus_1",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "bonus",
+    "name": "Bonus EP 1",
+    "sortKey": "01",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_bonus_2",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "bonus",
+    "name": "Bonus EP 2",
+    "sortKey": "02",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_bonus_3",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "bonus",
+    "name": "Bonus EP 3",
+    "sortKey": "03",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_bonus_4",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "bonus",
+    "name": "Bonus EP 4",
+    "sortKey": "04",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_bonus_5",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "bonus",
+    "name": "Bonus EP 5",
+    "sortKey": "05",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_bonus_6",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "bonus",
+    "name": "Bonus EP 6",
+    "sortKey": "06",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_bonus_7",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "bonus",
+    "name": "Bonus EP 7",
+    "sortKey": "07",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_bonus_8",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "bonus",
+    "name": "Bonus EP 8",
+    "sortKey": "08",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_bonus_9",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "bonus",
+    "name": "Bonus EP 9",
+    "sortKey": "09",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_bonus_10",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "bonus",
+    "name": "Bonus EP 10",
+    "sortKey": "10",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_bonus_11",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "bonus",
+    "name": "Bonus EP 11",
+    "sortKey": "11",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_bonus_12",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "bonus",
+    "name": "Bonus EP 12",
+    "sortKey": "12",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_bonus_13",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "bonus",
+    "name": "Bonus EP 13",
+    "sortKey": "13",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_bonus_14",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "bonus",
+    "name": "Bonus EP 14",
+    "sortKey": "14",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ep_bonus_15",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "bonus",
+    "name": "Bonus EP 15",
+    "sortKey": "15",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_core_1",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "core",
+    "name": "Core HS 1",
+    "sortKey": "01",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_core_2",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "core",
+    "name": "Core HS 2",
+    "sortKey": "02",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_core_3",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "core",
+    "name": "Core HS 3",
+    "sortKey": "03",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_core_4",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "core",
+    "name": "Core HS 4",
+    "sortKey": "04",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_core_5",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "core",
+    "name": "Core HS 5",
+    "sortKey": "05",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_core_6",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "core",
+    "name": "Core HS 6",
+    "sortKey": "06",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_core_7",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "core",
+    "name": "Core HS 7",
+    "sortKey": "07",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_core_8",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "core",
+    "name": "Core HS 8",
+    "sortKey": "08",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_core_9",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "core",
+    "name": "Core HS 9",
+    "sortKey": "09",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_core_10",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "core",
+    "name": "Core HS 10",
+    "sortKey": "10",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_bonus_1",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "bonus",
+    "name": "Bonus HS 1",
+    "sortKey": "01",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_bonus_2",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "bonus",
+    "name": "Bonus HS 2",
+    "sortKey": "02",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_bonus_3",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "bonus",
+    "name": "Bonus HS 3",
+    "sortKey": "03",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_bonus_4",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "bonus",
+    "name": "Bonus HS 4",
+    "sortKey": "04",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_bonus_5",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "bonus",
+    "name": "Bonus HS 5",
+    "sortKey": "05",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_bonus_6",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "bonus",
+    "name": "Bonus HS 6",
+    "sortKey": "06",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_bonus_7",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "bonus",
+    "name": "Bonus HS 7",
+    "sortKey": "07",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_bonus_8",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "bonus",
+    "name": "Bonus HS 8",
+    "sortKey": "08",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_bonus_9",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "bonus",
+    "name": "Bonus HS 9",
+    "sortKey": "09",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_bonus_10",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "bonus",
+    "name": "Bonus HS 10",
+    "sortKey": "10",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_bonus_11",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "bonus",
+    "name": "Bonus HS 11",
+    "sortKey": "11",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_bonus_12",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "bonus",
+    "name": "Bonus HS 12",
+    "sortKey": "12",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_bonus_13",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "bonus",
+    "name": "Bonus HS 13",
+    "sortKey": "13",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_bonus_14",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "bonus",
+    "name": "Bonus HS 14",
+    "sortKey": "14",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "hs_bonus_15",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "bonus",
+    "name": "Bonus HS 15",
+    "sortKey": "15",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_core_1",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "core",
+    "name": "Core AK 1",
+    "sortKey": "01",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_core_2",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "core",
+    "name": "Core AK 2",
+    "sortKey": "02",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_core_3",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "core",
+    "name": "Core AK 3",
+    "sortKey": "03",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_core_4",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "core",
+    "name": "Core AK 4",
+    "sortKey": "04",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_core_5",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "core",
+    "name": "Core AK 5",
+    "sortKey": "05",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_core_6",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "core",
+    "name": "Core AK 6",
+    "sortKey": "06",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_core_7",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "core",
+    "name": "Core AK 7",
+    "sortKey": "07",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_core_8",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "core",
+    "name": "Core AK 8",
+    "sortKey": "08",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_core_9",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "core",
+    "name": "Core AK 9",
+    "sortKey": "09",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_core_10",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "core",
+    "name": "Core AK 10",
+    "sortKey": "10",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_bonus_1",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "bonus",
+    "name": "Bonus AK 1",
+    "sortKey": "01",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_bonus_2",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "bonus",
+    "name": "Bonus AK 2",
+    "sortKey": "02",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_bonus_3",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "bonus",
+    "name": "Bonus AK 3",
+    "sortKey": "03",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_bonus_4",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "bonus",
+    "name": "Bonus AK 4",
+    "sortKey": "04",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_bonus_5",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "bonus",
+    "name": "Bonus AK 5",
+    "sortKey": "05",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_bonus_6",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "bonus",
+    "name": "Bonus AK 6",
+    "sortKey": "06",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_bonus_7",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "bonus",
+    "name": "Bonus AK 7",
+    "sortKey": "07",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_bonus_8",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "bonus",
+    "name": "Bonus AK 8",
+    "sortKey": "08",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_bonus_9",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "bonus",
+    "name": "Bonus AK 9",
+    "sortKey": "09",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_bonus_10",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "bonus",
+    "name": "Bonus AK 10",
+    "sortKey": "10",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_bonus_11",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "bonus",
+    "name": "Bonus AK 11",
+    "sortKey": "11",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_bonus_12",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "bonus",
+    "name": "Bonus AK 12",
+    "sortKey": "12",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_bonus_13",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "bonus",
+    "name": "Bonus AK 13",
+    "sortKey": "13",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_bonus_14",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "bonus",
+    "name": "Bonus AK 14",
+    "sortKey": "14",
+    "active": true,
+    "themeparksWikiId": null
+  },
+  {
+    "id": "ak_bonus_15",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "bonus",
+    "name": "Bonus AK 15",
+    "sortKey": "15",
+    "active": true,
+    "themeparksWikiId": null
+  }
+]
