@@ -51,8 +51,14 @@ function attractionById(id){ return attractions.find(a=>a.id===id); }
 function excludedSet(ch=active){ return new Set(ch?.excludedAttractionIds || ch?.settings?.excludedAttractionIds || []); }
 function completedMap(ch=active){
   const m = new Map();
-  (ch?.events || []).forEach((e,i)=>m.set(e.attractionId,{event:e,index:i}));
+  (ch?.events || []).forEach((e,i)=>{
+    const a=attractionById(e.attractionId);
+    if(a?.type!=='repeatable_text') m.set(e.attractionId,{event:e,index:i});
+  });
   return m;
+}
+function repeatableEvents(a,ch=active){
+  return (ch?.events||[]).map((event,index)=>({event,index})).filter(x=>x.event.attractionId===a.id);
 }
 function statusFor(ch=active){
   const done = completedMap(ch), excluded = excludedSet(ch);
@@ -149,28 +155,55 @@ function renderChallengePage(){
     <div id="waitMeta" class="subtle" style="margin-top:10px"></div>
   </div></div>`;
   list.forEach(a=>{
-    if(done.has(a.id)) document.querySelector(`[data-undo="${a.id}"]`)?.addEventListener('click',()=>confirmUndo(a,done.get(a.id)));
-    else if(!excluded.has(a.id)) document.querySelector(`[data-complete="${a.id}"]`)?.addEventListener('click',()=>completeAttraction(a));
+    if(a.type==='repeatable_text'){
+      document.querySelector(`[data-repeatable="${a.id}"]`)?.addEventListener('click',()=>openRepeatableEntry(a));
+      repeatableEvents(a).forEach(info=>document.querySelector(`[data-undo-event="${info.event.id}"]`)?.addEventListener('click',()=>confirmUndoEvent(a,info)));
+    } else if(done.has(a.id)) {
+      const info=done.get(a.id);
+      document.querySelector(`[data-undo-event="${info.event.id}"]`)?.addEventListener('click',()=>confirmUndoEvent(a,info));
+    } else if(!excluded.has(a.id)) {
+      document.querySelector(`[data-complete="${a.id}"]`)?.addEventListener('click',()=>completeAttraction(a));
+    }
   });
   applyWaits();
 }
 function renderAttraction(a,done,excluded){
+  if(a.type==='repeatable_text') return renderRepeatableAttraction(a,excluded);
   const info=done.get(a.id), isExcluded=!info&&excluded.has(a.id); const wait=waitFor(a);
   return `<div class="rideRow ${info?'completed':''} ${isExcluded?'excluded':''}">
-    <div class="rideMain"><div class="rideName">${escapeHtml(a.name)}${wait!==null?` <span class="waitInline">(${wait} min)</span>`:''}</div>
-      ${info?`<div class="completedMeta"><div class="completedNote">Completed ${escapeHtml(formatTime(info.event.timeISO))}</div><button class="smallBtn" data-undo="${a.id}">Undo</button></div>`:''}
+    <div class="rideMain" ${!info&&!isExcluded?`data-complete="${a.id}"`:''}><div class="rideName">${escapeHtml(a.name)}${wait!==null?` <span class="waitInline">(${wait} min)</span>`:''}</div>
+      ${info?`<div class="completedMeta"><div class="completedNote">Completed ${escapeHtml(formatTime(info.event.timeISO))}</div><button class="smallBtn" data-undo-event="${info.event.id}">Undo</button></div>`:''}
       ${isExcluded?`<div class="excludedNote">Excluded from today’s challenge</div>`:''}
     </div>
-  </div>`.replace('class="rideRow ', `class="rideRow ${!info&&!isExcluded?'clickableAttraction ':''}`).replace('<div class="rideMain"', `<div class="rideMain" ${!info&&!isExcluded?`data-complete="${a.id}"`:''}`);
+  </div>`.replace('class="rideRow ', `class="rideRow ${!info&&!isExcluded?'clickableAttraction ':''}`);
+}
+function renderRepeatableAttraction(a,excluded){
+  const isExcluded=excluded.has(a.id);
+  const completed=repeatableEvents(a).map(({event})=>`<div class="rideRow completed"><div class="rideMain"><div class="rideName">${escapeHtml(event.attractionName)}</div><div class="completedMeta"><div class="completedNote">Completed ${escapeHtml(formatTime(event.timeISO))}</div><button class="smallBtn" data-undo-event="${event.id}">Undo</button></div></div></div>`).join('');
+  const template=`<div class="rideRow ${isExcluded?'excluded':'clickableAttraction'}"><div class="rideMain" ${!isExcluded?`data-repeatable="${a.id}"`:''}><div class="rideName">${escapeHtml(a.name)}</div>${isExcluded?`<div class="excludedNote">Excluded from today’s challenge</div>`:'<div class="subtle">Tap each time you meet a character</div>'}</div></div>`;
+  return completed+template;
 }
 
-function completeAttraction(a){
+function completeAttraction(a,{displayName=null,entryValue=null}={}){
   if(!active)return;
-  const e={id:crypto.randomUUID(),attractionId:a.id,park:a.park,category:a.category,attractionName:a.name,timeISO:new Date().toISOString()};
+  const e={id:crypto.randomUUID(),attractionId:a.id,park:a.park,category:a.category,attractionName:displayName||a.name,timeISO:new Date().toISOString()};
+  if(a.type==='repeatable_text'){ e.repeatable=true; e.entryValue=entryValue||''; }
   active.events.push(e); saveActiveChallenge(active); refreshHeader(); renderChallengePage();
   const mode=active.tweetMode||active.settings?.tweetMode||'original';
   if(mode==='original') openTweetDraft(buildTweet([e]));
   else if(active.events.length%2===0) openTweetDraft(buildTweet(active.events.slice(-2)));
+}
+function openRepeatableEntry(a){
+  openDialog({title:a.name,content:`<div class="formRow"><div class="label">${escapeHtml(a.prompt||'What did you complete?')}</div><input id="repeatableEntry" class="input" autocomplete="off" placeholder="Character name"></div>`,buttons:[{text:'Submit',primary:true,action:submit},{text:'Cancel',action:closeDialog}]});
+  const input=document.getElementById('repeatableEntry');
+  function submit(){
+    const value=input.value.trim();
+    if(!value){input.focus();return;}
+    closeDialog();
+    completeAttraction(a,{displayName:`${a.name} (${value})`,entryValue:value});
+  }
+  input.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();submit();}});
+  input.focus();
 }
 function buildTweet(events){
   const all=active.events; const lines=events.map(e=>{const n=all.findIndex(x=>x.id===e.id)+1;return `Attraction ${n}. ${e.attractionName} at ${formatTime(e.timeISO)}`;});
@@ -180,8 +213,9 @@ function buildTweet(events){
 }
 function openTweetDraft(text){ window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`,'_blank','noopener,noreferrer'); }
 
-function confirmUndo(a,info){
-  openConfirm({title:`Undo completion of ${a.name}?`,body:info.index===active.events.length-1?'This attraction will be marked incomplete.':'This attraction will be marked incomplete and later attraction numbers will change. Previously sent tweets will not change.',confirm:'Undo completion',action:()=>{active.events=active.events.filter(e=>e.id!==info.event.id);saveActiveChallenge(active);renderChallengePage();}});
+function confirmUndoEvent(a,info){
+  const label=info.event.attractionName||a.name;
+  openConfirm({title:`Undo completion of ${label}?`,body:info.index===active.events.length-1?'This attraction will be marked incomplete.':'This attraction will be marked incomplete and later attraction numbers will change. Previously sent tweets will not change.',confirm:'Undo completion',action:()=>{active.events=active.events.filter(e=>e.id!==info.event.id);saveActiveChallenge(active);renderChallengePage();}});
 }
 
 function openExclusions({mode}){

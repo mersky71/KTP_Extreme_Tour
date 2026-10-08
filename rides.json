@@ -250,6 +250,18 @@
     "themeparksWikiId": null
   },
   {
+    "id": "mk_bonus_character_meet",
+    "park": "mk",
+    "parkName": "Magic Kingdom",
+    "category": "bonus",
+    "name": "Bonus Character Meet MK",
+    "sortKey": "99",
+    "active": true,
+    "themeparksWikiId": null,
+    "type": "repeatable_text",
+    "prompt": "Which character did you meet?"
+  },
+  {
     "id": "ep_core_1",
     "park": "ep",
     "parkName": "EPCOT",
@@ -498,6 +510,18 @@
     "sortKey": "15",
     "active": true,
     "themeparksWikiId": null
+  },
+  {
+    "id": "ep_bonus_character_meet",
+    "park": "ep",
+    "parkName": "EPCOT",
+    "category": "bonus",
+    "name": "Bonus Character Meet EP",
+    "sortKey": "99",
+    "active": true,
+    "themeparksWikiId": null,
+    "type": "repeatable_text",
+    "prompt": "Which character did you meet?"
   },
   {
     "id": "hs_core_1",
@@ -750,6 +774,18 @@
     "themeparksWikiId": null
   },
   {
+    "id": "hs_bonus_character_meet",
+    "park": "hs",
+    "parkName": "Hollywood Studios",
+    "category": "bonus",
+    "name": "Bonus Character Meet HS",
+    "sortKey": "99",
+    "active": true,
+    "themeparksWikiId": null,
+    "type": "repeatable_text",
+    "prompt": "Which character did you meet?"
+  },
+  {
     "id": "ak_core_1",
     "park": "ak",
     "parkName": "Animal Kingdom",
@@ -998,5 +1034,17 @@
     "sortKey": "15",
     "active": true,
     "themeparksWikiId": null
+  },
+  {
+    "id": "ak_bonus_character_meet",
+    "park": "ak",
+    "parkName": "Animal Kingdom",
+    "category": "bonus",
+    "name": "Bonus Character Meet AK",
+    "sortKey": "99",
+    "active": true,
+    "themeparksWikiId": null,
+    "type": "repeatable_text",
+    "prompt": "Which character did you meet?"
   }
 ]
