@@ -10,6 +10,43 @@ const PARKS = {
   hs: { id:'hs', name:'Hollywood Studios', theme:'#ff3ea5', wiki:'288747d1-8b4f-4a64-867e-ea7c9b27bad8' },
   ak: { id:'ak', name:'Animal Kingdom', theme:'#166534', wiki:'1c84a229-8862-4648-9c71-378ddd2c7693' }
 };
+const REQUIRED_TWEET_TEXT = {
+  mk: '@thepiratekenny #ExtremeMagicKingdomChallenge',
+  ep: '@thepiratekenny #ExtremeEpcotChallenge',
+  hs: '@thepiratekenny #ExtremeHolllyoodStudiosChallenge',
+  ak: '@thepiratekenny #ExtremeAnimalKingdomChallenge'
+};
+
+const CHALLENGE_RULES = [
+  'There is no need to pre-register, but you are welcome to announce your attempt in advance on X.',
+  'Your X profile must remain public for the duration of the challenge until the challenge is officially scored.',
+  'Each X post must include @thepiratekenny and the appropriate park challenge hashtag.',
+  'You must use a timestamp camera app on your phone. TimeMark is preferred in the source rules.',
+  'Lightning Lane Multi Pass and Lightning Lane Single Pass may be used. Premier Pass may not be used for this challenge.',
+  'Include a screenshot of each Lightning Lane showing participant name(s), date, and time.',
+  'Early Entry, Extended Evening Hours, Halloween Party, Christmas Party, and After Hours add-on tickets may be used.',
+  'To complete the challenge, you must complete the full Core attraction list, after permitted exclusions for attractions or entertainment not operating that day.',
+  'Your team may not split up at any point during the challenge.',
+  'An attraction that is not officially open to the public, such as during a preview, may not count.',
+  'For Entertainment Acts: if nothing is scheduled for that pavilion or location that day, you may skip it. Use Excluded attractions in this app.',
+  'The challenge begins with the timestamp on your first photo and ends with the timestamp on your last photo. Timing and final adjudication are handled outside this app.',
+  'For a parade, you must see every float from first to last from a reasonable viewing location where others are watching. For a street-party component, stay until the floats begin departing.',
+  'Shows must be watched from beginning to end unless the attraction task specifically gives a different requirement.',
+  'Some performances require at least 5 minutes. Use the info button beside each attraction for its specific task.',
+  'Shows must be watched from an acceptable viewing location that provides a clear view of the critical action.',
+  'For total-time calculations, time spent waiting for a final event or show after all other operating attractions are complete does not count; final timing is adjudicated outside this app.',
+  'Each character meeting experience/queue counts as one bonus attraction even when multiple characters are present.',
+  'The same character may not be counted again at a different location.',
+  'If a character does not provide autographs, a photograph with that character is sufficient evidence.'
+];
+
+const STOP_LOCATIONS = {
+  ak: 'Bridge between The Oasis and Discovery Island',
+  ep: "Fountain of Nations (don't jump in!)",
+  hs: 'Intersection of Hollywood Blvd and Sunset Blvd',
+  mk: 'The road portion of the Hub (not a sidewalk)'
+};
+
 const TZ = 'America/New_York';
 const app = document.getElementById('app');
 const topbar = document.getElementById('topbar');
@@ -59,6 +96,13 @@ function completedMap(ch=active){
 }
 function repeatableEvents(a,ch=active){
   return (ch?.events||[]).map((event,index)=>({event,index})).filter(x=>x.event.attractionId===a.id);
+}
+function isUnlocked(a,ch=active){
+  if(!a?.requiresCoreId) return true;
+  return completedMap(ch).has(a.requiresCoreId);
+}
+function infoButton(a){
+  return a?.task ? `<button class="infoBtn" type="button" data-info="${a.id}" aria-label="Instructions for ${escapeHtml(a.name)}">ⓘ</button>` : '';
 }
 function statusFor(ch=active){
   const done = completedMap(ch), excluded = excludedSet(ch);
@@ -110,7 +154,7 @@ function saveDraft(d){ localStorage.setItem(draftKey(),JSON.stringify(d)); }
 function showStartPage(){
   showHeader(false); applyTheme(selectedPark); const p=parkData(selectedPark), d=loadDraft();
   app.innerHTML=`<div class="stack startPage">
-    <div class="card"><div class="h1">KTP Ultimate ${escapeHtml(p.name)} Challenge</div><button id="backSelector" class="textLink" type="button">← Back to challenge selector</button></div>
+    <div class="card"><div class="h1">KTP Ultimate ${escapeHtml(p.name)} Challenge</div><div class="btnRow startPageNav"><button id="backSelector" class="btn btnPrimary" type="button">Back to challenge selector</button><button id="rulesBtn" class="btn btnPrimary" type="button">Rules</button></div></div>
     <div class="card"><div class="h1">Start a new challenge</div>
       <div class="formRow"><div class="label">Tweet mode</div>
         <label class="btn btnInverse optionRow"><input type="radio" name="tweetMode" value="original" ${d.tweetMode!=='twofer'?'checked':''}> <span>Single mode: tweet every attraction</span></label>
@@ -128,6 +172,7 @@ function showStartPage(){
     ${renderResumeCard(selectedPark)}
   </div>`;
   document.getElementById('backSelector').onclick=showChallengeSelector;
+  document.getElementById('rulesBtn').onclick=openRules;
   document.getElementById('excludeBtn').onclick=()=>openExclusions({mode:'draft'});
   document.getElementById('resumeRecent')?.addEventListener('click',()=>{
     const h=loadChallengeHistory().filter(x=>x.parkId===selectedPark).sort((a,b)=>(Date.parse(b.endedAt||b.startedAt)||0)-(Date.parse(a.endedAt||a.startedAt)||0))[0];
@@ -143,7 +188,7 @@ function showStartPage(){
 function renderResumeCard(pid){
   const candidates=loadChallengeHistory().filter(h=>h.parkId===pid).sort((a,b)=>(Date.parse(b.endedAt||b.startedAt)||0)-(Date.parse(a.endedAt||a.startedAt)||0));
   const h=candidates[0]; if(!h) return '';
-  return `<div class="card"><div class="h1">Recent challenge</div><p class="p">${escapeHtml(formatDateTime(h.startedAt))} · Total ${(h.events||[]).length}</p><div class="btnRow" style="margin-top:10px"><button id="resumeRecent" class="btn">Resume this challenge</button></div></div>`;
+  return `<div class="card"><div class="h1">Recent challenge</div><p class="p">${escapeHtml(formatDateTime(h.startedAt))} · Total ${(h.events||[]).length}</p><div class="btnRow" style="margin-top:10px"><button id="resumeRecent" class="btn btnPrimary">Resume this challenge</button></div></div>`;
 }
 
 function showChallenge(){ selectedPark=active.parkId; applyTheme(selectedPark); showHeader(true); renderChallengePage(); requestWaits(); }
@@ -155,6 +200,7 @@ function renderChallengePage(){
     <div id="waitMeta" class="subtle" style="margin-top:10px"></div>
   </div></div>`;
   list.forEach(a=>{
+    document.querySelectorAll(`[data-info="${a.id}"]`).forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();openAttractionInfo(a);}));
     if(a.type==='repeatable_text'){
       document.querySelector(`[data-repeatable="${a.id}"]`)?.addEventListener('click',()=>openRepeatableEntry(a));
       repeatableEvents(a).forEach(info=>document.querySelector(`[data-undo-event="${info.event.id}"]`)?.addEventListener('click',()=>confirmUndoEvent(a,info)));
@@ -170,18 +216,24 @@ function renderChallengePage(){
 function renderAttraction(a,done,excluded){
   if(a.type==='repeatable_text') return renderRepeatableAttraction(a,excluded);
   const info=done.get(a.id), isExcluded=!info&&excluded.has(a.id); const wait=waitFor(a);
-  return `<div class="rideRow ${info?'completed':''} ${isExcluded?'excluded':''}">
-    <div class="rideMain" ${!info&&!isExcluded?`data-complete="${a.id}"`:''}><div class="rideName">${escapeHtml(a.name)}${wait!==null?` <span class="waitInline">(${wait} min)</span>`:''}</div>
+  return `<div class="rideRow ${info?'completed':''} ${isExcluded?'excluded':''} ${!info&&!isExcluded?'clickableAttraction':''}">
+    <div class="rideMain" ${!info&&!isExcluded?`data-complete="${a.id}"`:''}><div class="rideNameLine"><div class="rideName">${escapeHtml(a.name)}${wait!==null?` <span class="waitInline">(${wait} min)</span>`:''}</div>${infoButton(a)}</div>
       ${info?`<div class="completedMeta"><div class="completedNote">Completed ${escapeHtml(formatTime(info.event.timeISO))}</div><button class="smallBtn" data-undo-event="${info.event.id}">Undo</button></div>`:''}
       ${isExcluded?`<div class="excludedNote">Excluded from today’s challenge</div>`:''}
     </div>
-  </div>`.replace('class="rideRow ', `class="rideRow ${!info&&!isExcluded?'clickableAttraction ':''}`);
+  </div>`;
 }
 function renderRepeatableAttraction(a,excluded){
-  const isExcluded=excluded.has(a.id);
+  const isExcluded=excluded.has(a.id), unlocked=isUnlocked(a);
   const completed=repeatableEvents(a).map(({event})=>`<div class="rideRow completed"><div class="rideMain"><div class="rideName">${escapeHtml(event.attractionName)}</div><div class="completedMeta"><div class="completedNote">Completed ${escapeHtml(formatTime(event.timeISO))}</div><button class="smallBtn" data-undo-event="${event.id}">Undo</button></div></div></div>`).join('');
-  const template=`<div class="rideRow ${isExcluded?'excluded':'clickableAttraction'}"><div class="rideMain" ${!isExcluded?`data-repeatable="${a.id}"`:''}><div class="rideName">${escapeHtml(a.name)}</div>${isExcluded?`<div class="excludedNote">Excluded from today’s challenge</div>`:'<div class="subtle">Tap each time you meet a character</div>'}</div></div>`;
+  const stateClass=isExcluded?'excluded':(!unlocked?'locked':'clickableAttraction');
+  const attr=(!isExcluded&&unlocked)?`data-repeatable="${a.id}"`:'';
+  const helper=isExcluded?'Excluded from today’s challenge':(!unlocked?(a.hint||'Activated after linked Core attraction completed.'):(a.hint||'Tap to add a bonus completion.'));
+  const template=`<div class="rideRow ${stateClass}"><div class="rideMain" ${attr}><div class="rideNameLine"><div class="rideName">${escapeHtml(a.name)}</div>${infoButton(a)}</div><div class="${isExcluded?'excludedNote':'subtle'}">${escapeHtml(helper)}</div></div></div>`;
   return completed+template;
+}
+function openAttractionInfo(a){
+  openDialog({title:a.name,content:`<div class="instructionText">${escapeHtml(a.task||'No additional instructions.')}</div>`,buttons:[{text:'Close',primary:true,action:closeDialog}]});
 }
 
 function completeAttraction(a,{displayName=null,entryValue=null}={}){
@@ -194,7 +246,7 @@ function completeAttraction(a,{displayName=null,entryValue=null}={}){
   else if(active.events.length%2===0) openTweetDraft(buildTweet(active.events.slice(-2)));
 }
 function openRepeatableEntry(a){
-  openDialog({title:a.name,content:`<div class="formRow"><div class="label">${escapeHtml(a.prompt||'What did you complete?')}</div><input id="repeatableEntry" class="input" autocomplete="off" placeholder="Character name"></div>`,buttons:[{text:'Submit',primary:true,action:submit},{text:'Cancel',action:closeDialog}]});
+  openDialog({title:a.name,content:`<div class="formRow"><div class="label">${escapeHtml(a.prompt||'What did you complete?')}</div><input id="repeatableEntry" class="input" autocomplete="off" placeholder="Enter details"></div>`,buttons:[{text:'Submit',primary:true,action:submit},{text:'Cancel',action:closeDialog}]});
   const input=document.getElementById('repeatableEntry');
   function submit(){
     const value=input.value.trim();
@@ -208,8 +260,9 @@ function openRepeatableEntry(a){
 function buildTweet(events){
   const all=active.events; const lines=events.map(e=>{const n=all.findIndex(x=>x.id===e.id)+1;return `Attraction ${n}. ${e.attractionName} at ${formatTime(e.timeISO)}`;});
   const link=(active.fundraisingLink??active.settings?.fundraisingLink??'').trim();
+  const required=REQUIRED_TWEET_TEXT[active.parkId]||'';
   const tags=(active.tagsText??active.settings?.tagsText??'').trim();
-  return [lines.join('\n'), tags, link].filter(Boolean).join('\n\n');
+  return [lines.join('\n'), required, tags, link].filter(Boolean).join('\n\n');
 }
 function openTweetDraft(text){ window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`,'_blank','noopener,noreferrer'); }
 
@@ -234,9 +287,16 @@ function openExclusions({mode}){
   }; render();
 }
 
+function openRules(){
+  const p=parkData(selectedPark);
+  const required=REQUIRED_TWEET_TEXT[selectedPark]||'';
+  const list=CHALLENGE_RULES.map(r=>`<li>${escapeHtml(r)}</li>`).join('');
+  openDialog({title:`KTP Ultimate ${p.name} Challenge Rules`,content:`<div class="rulesScroll"><p><strong>Required X text:</strong> ${escapeHtml(required)}</p><ol>${list}</ol><h4>Stop location</h4><p>${escapeHtml(STOP_LOCATIONS[selectedPark]||'')}</p><h4>Ranking</h4><p>Complete all operating Core attractions to qualify. Rankings are first by total attractions experienced (Core plus Bonus), then by total touring time.</p></div>`,buttons:[{text:'Close',primary:true,action:closeDialog}]});
+}
+
 function openSettings(){
   if(!active)return; const link=active.fundraisingLink??active.settings?.fundraisingLink??'';
-  openDialog({title:'Tweet settings',content:`<div class="formRow"><div class="label">Additional tweet text / hashtags</div><textarea id="tagsText" class="textarea">${escapeHtml(active.tagsText??active.settings?.tagsText??'')}</textarea></div><div class="formRow" style="margin-top:10px"><div class="label">Fundraising link</div><input id="fundLink" class="input" value="${escapeHtml(link)}"></div>`,buttons:[{text:'Save',primary:true,action:()=>{active.tagsText=document.getElementById('tagsText').value.trim();active.fundraisingLink=document.getElementById('fundLink').value.trim();active.settings={...(active.settings||{}),tagsText:active.tagsText,fundraisingLink:active.fundraisingLink};saveActiveChallenge(active);closeDialog();}},{text:'Cancel',action:closeDialog}]});
+  openDialog({title:'Tweet settings',content:`<div class="formRow"><div class="label">Additional tweet text / hashtags</div><div class="subtle">${escapeHtml(REQUIRED_TWEET_TEXT[active.parkId]||'')} is added automatically.</div><textarea id="tagsText" class="textarea">${escapeHtml(active.tagsText??active.settings?.tagsText??'')}</textarea></div><div class="formRow" style="margin-top:10px"><div class="label">Fundraising link</div><input id="fundLink" class="input" value="${escapeHtml(link)}"></div>`,buttons:[{text:'Save',primary:true,action:()=>{active.tagsText=document.getElementById('tagsText').value.trim();active.fundraisingLink=document.getElementById('fundLink').value.trim();active.settings={...(active.settings||{}),tagsText:active.tagsText,fundraisingLink:active.fundraisingLink};saveActiveChallenge(active);closeDialog();}},{text:'Cancel',action:closeDialog}]});
 }
 
 function pendingTwofer(){ if((active?.tweetMode||active?.settings?.tweetMode)!=='twofer')return[]; return (active.events||[]).length%2===1?[active.events.at(-1)]:[]; }
@@ -257,11 +317,15 @@ function openHistory(){
 
 async function requestWaits(){
   const p=parkData(selectedPark); if(!p.wiki)return;
-  try{const r=await fetch(`https://api.themeparks.wiki/v1/entity/${p.wiki}/live`);if(!r.ok)throw new Error('waits');const j=await r.json();waitSnapshot=j;waitFetchedAt=Date.now();applyWaits();}catch{waitSnapshot=null;}
+  try{const r=await fetch(`https://api.themeparks.wiki/v1/entity/${p.wiki}/live`);if(!r.ok)throw new Error('waits');const j=await r.json();waitSnapshot=j;waitFetchedAt=Date.now();renderChallengePage();}catch{waitSnapshot=null;}
 }
 function flattenLive(obj){ if(Array.isArray(obj))return obj.flatMap(flattenLive); if(!obj||typeof obj!=='object')return[]; return [obj,...Object.values(obj).flatMap(flattenLive)]; }
 function waitFor(a){
-  if(!a?.themeparksWikiId||!waitSnapshot)return null; const ent=flattenLive(waitSnapshot).find(x=>x?.id===a.themeparksWikiId); if(!ent)return null;
+  if(!a||!waitSnapshot)return null;
+  const normalize=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
+  const wanted=normalize(a.themeparksWikiName||a.name);
+  const ent=flattenLive(waitSnapshot).find(x=>a.themeparksWikiId?x?.id===a.themeparksWikiId:((a.themeparksWikiName||a.attractionType==='RIDE')&&normalize(x?.name)===wanted));
+  if(!ent)return null;
   const q=ent.queue||ent.queues||{}; const v=q?.STANDBY?.waitTime??q?.standby?.waitTime??ent.waitTime; return Number.isFinite(Number(v))?Number(v):null;
 }
 function applyWaits(){ if(!active)return; const meta=document.getElementById('waitMeta'); if(meta&&waitFetchedAt)meta.textContent=`Waits updated ${new Date(waitFetchedAt).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})}`; }

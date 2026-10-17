@@ -803,3 +803,53 @@ body.inChallenge #appTitle {
 @media(max-width:520px){.ktpTopbar__nav{grid-template-columns:minmax(70px,1fr) auto auto}.ktpTopbar__nav .brand__title{font-size:12px}.ktpTab{padding:5px 8px}.iconBtn{padding:5px 8px}.ktpParkGrid{grid-template-columns:1fr}.app--withKtpHeader{padding-top:90px}}
 .clickableAttraction{cursor:pointer;}
 .clickableAttraction:hover{background:#f8fafc;}
+
+/* --- KTP Ultimate attraction instructions / linked bonus states --- */
+.startPageNav{ margin-top:10px; }
+.rideNameLine{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  width:100%;
+}
+.rideNameLine .rideName{
+  flex:1;
+  min-width:0;
+}
+.infoBtn{
+  flex-shrink:0;
+  width:28px;
+  height:28px;
+  padding:0;
+  border-radius:999px;
+  border:1px solid #cbd5e1;
+  background:#ffffff;
+  color:#334155;
+  font-size:16px;
+  font-weight:700;
+  line-height:1;
+  cursor:pointer;
+}
+.infoBtn:hover{ background:#f8fafc; }
+.rideRow.locked{
+  background:#f3f4f6;
+  color:#6b7280;
+}
+.rideRow.locked .rideName{ color:#6b7280; }
+.rideRow.locked .subtle{ color:#6b7280; }
+.instructionText{
+  color:#111827;
+  line-height:1.45;
+  white-space:pre-wrap;
+}
+.rulesScroll{
+  max-height:min(68vh, 620px);
+  overflow-y:auto;
+  padding-right:6px;
+  color:#111827;
+  line-height:1.42;
+}
+.rulesScroll ol{ margin:8px 0 14px 22px; padding:0; }
+.rulesScroll li{ margin:0 0 8px; }
+.rulesScroll h4{ margin:14px 0 6px; }
+.rulesScroll p{ color:#374151 !important; }
