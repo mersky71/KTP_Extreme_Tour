@@ -853,3 +853,28 @@ body.inChallenge #appTitle {
 .rulesScroll li{ margin:0 0 8px; }
 .rulesScroll h4{ margin:14px 0 6px; }
 .rulesScroll p{ color:#374151 !important; }
+
+/* --- KTP Ultimate v1.4: attraction type shading + compact completed rows --- */
+.rideRow.clickableAttraction.attractionType-ride{ background:#f2f7ff; }
+.rideRow.clickableAttraction.attractionType-show{ background:#f7f3ff; }
+.rideRow.clickableAttraction.attractionType-meet{ background:#fff3f7; }
+.rideRow.clickableAttraction.attractionType-entertainment{ background:#fff9e8; }
+.rideRow.clickableAttraction.attractionType-exhibit{ background:#f2faf4; }
+.rideRow.clickableAttraction.attractionType-activity{ background:#eefafa; }
+.rideRow.clickableAttraction.attractionType-parade{ background:#fff4eb; }
+.rideRow.clickableAttraction.attractionType-ride:hover,
+.rideRow.clickableAttraction.attractionType-show:hover,
+.rideRow.clickableAttraction.attractionType-meet:hover,
+.rideRow.clickableAttraction.attractionType-entertainment:hover,
+.rideRow.clickableAttraction.attractionType-exhibit:hover,
+.rideRow.clickableAttraction.attractionType-activity:hover,
+.rideRow.clickableAttraction.attractionType-parade:hover{ filter:brightness(.985); }
+.completedInline{
+  display:inline;
+  margin-left:6px;
+  color:#6b7280;
+  font-size:12px;
+  font-weight:500;
+  white-space:nowrap;
+}
+.undoInlineBtn{ flex-shrink:0; }

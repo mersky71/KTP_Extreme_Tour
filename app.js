@@ -13,7 +13,7 @@ const PARKS = {
 const REQUIRED_TWEET_TEXT = {
   mk: '@thepiratekenny #ExtremeMagicKingdomChallenge',
   ep: '@thepiratekenny #ExtremeEpcotChallenge',
-  hs: '@thepiratekenny #ExtremeHolllyoodStudiosChallenge',
+  hs: '@thepiratekenny #ExtremeHollywoodStudiosChallenge',
   ak: '@thepiratekenny #ExtremeAnimalKingdomChallenge'
 };
 
@@ -165,7 +165,7 @@ function showStartPage(){
         <input id="fundraisingLink" class="input" value="${escapeHtml(d.fundraisingLink||'')}" placeholder="https://...">
       </div>
       <div class="formRow" style="margin-top:14px"><div class="label">Excluded attractions</div>
-        <button id="excludeBtn" class="btn btnInverse" type="button">Attractions excluded: ${d.excluded?.length||0} of ${parkAttractions(selectedPark).length}</button>
+        <button id="excludeBtn" class="btn btnInverse" type="button">Attractions excluded: ${(d.excluded||[]).filter(id=>attractionById(id)?.category==='core').length} of ${categoryAttractions('core',selectedPark).length}</button>
       </div>
       <div class="btnRow" style="margin-top:16px"><button id="startBtn" class="btn btnPrimary">Start new challenge</button></div>
     </div>
@@ -213,23 +213,28 @@ function renderChallengePage(){
   });
   applyWaits();
 }
+function attractionTypeClass(a){
+  const t=(a?.attractionType||'').toLowerCase().replace(/[^a-z0-9]+/g,'-');
+  return t?`attractionType-${t}`:'';
+}
 function renderAttraction(a,done,excluded){
   if(a.type==='repeatable_text') return renderRepeatableAttraction(a,excluded);
   const info=done.get(a.id), isExcluded=!info&&excluded.has(a.id); const wait=waitFor(a);
-  return `<div class="rideRow ${info?'completed':''} ${isExcluded?'excluded':''} ${!info&&!isExcluded?'clickableAttraction':''}">
-    <div class="rideMain" ${!info&&!isExcluded?`data-complete="${a.id}"`:''}><div class="rideNameLine"><div class="rideName">${escapeHtml(a.name)}${wait!==null?` <span class="waitInline">(${wait} min)</span>`:''}</div>${infoButton(a)}</div>
-      ${info?`<div class="completedMeta"><div class="completedNote">Completed ${escapeHtml(formatTime(info.event.timeISO))}</div><button class="smallBtn" data-undo-event="${info.event.id}">Undo</button></div>`:''}
+  const typeClass=!info&&!isExcluded?attractionTypeClass(a):'';
+  return `<div class="rideRow ${info?'completed':''} ${isExcluded?'excluded':''} ${!info&&!isExcluded?'clickableAttraction':''} ${typeClass}">
+    <div class="rideMain" ${!info&&!isExcluded?`data-complete="${a.id}"`:''}><div class="rideNameLine"><div class="rideName">${escapeHtml(a.name)}${wait!==null?` <span class="waitInline">(${wait} min)</span>`:''}${info?` <span class="completedInline">Completed ${escapeHtml(formatTime(info.event.timeISO))}</span>`:''}</div>${info?`<button class="smallBtn undoInlineBtn" data-undo-event="${info.event.id}">Undo</button>`:infoButton(a)}</div>
       ${isExcluded?`<div class="excludedNote">Excluded from today’s challenge</div>`:''}
     </div>
   </div>`;
 }
 function renderRepeatableAttraction(a,excluded){
   const isExcluded=excluded.has(a.id), unlocked=isUnlocked(a);
-  const completed=repeatableEvents(a).map(({event})=>`<div class="rideRow completed"><div class="rideMain"><div class="rideName">${escapeHtml(event.attractionName)}</div><div class="completedMeta"><div class="completedNote">Completed ${escapeHtml(formatTime(event.timeISO))}</div><button class="smallBtn" data-undo-event="${event.id}">Undo</button></div></div></div>`).join('');
+  const completed=repeatableEvents(a).map(({event})=>`<div class="rideRow completed"><div class="rideMain"><div class="rideNameLine"><div class="rideName">${escapeHtml(event.attractionName)} <span class="completedInline">Completed ${escapeHtml(formatTime(event.timeISO))}</span></div><button class="smallBtn undoInlineBtn" data-undo-event="${event.id}">Undo</button></div></div></div>`).join('');
   const stateClass=isExcluded?'excluded':(!unlocked?'locked':'clickableAttraction');
+  const typeClass=!isExcluded&&unlocked?attractionTypeClass(a):'';
   const attr=(!isExcluded&&unlocked)?`data-repeatable="${a.id}"`:'';
   const helper=isExcluded?'Excluded from today’s challenge':(!unlocked?(a.hint||'Activated after linked Core attraction completed.'):(a.hint||'Tap to add a bonus completion.'));
-  const template=`<div class="rideRow ${stateClass}"><div class="rideMain" ${attr}><div class="rideNameLine"><div class="rideName">${escapeHtml(a.name)}</div>${infoButton(a)}</div><div class="${isExcluded?'excludedNote':'subtle'}">${escapeHtml(helper)}</div></div></div>`;
+  const template=`<div class="rideRow ${stateClass} ${typeClass}"><div class="rideMain" ${attr}><div class="rideNameLine"><div class="rideName">${escapeHtml(a.name)}</div>${infoButton(a)}</div><div class="${isExcluded?'excludedNote':'subtle'}">${escapeHtml(helper)}</div></div></div>`;
   return completed+template;
 }
 function openAttractionInfo(a){
@@ -272,12 +277,13 @@ function confirmUndoEvent(a,info){
 }
 
 function openExclusions({mode}){
-  const d=mode==='draft'?loadDraft():null; let selected=new Set(mode==='draft'?(d.excluded||[]):[...excludedSet()]); let tab='core';
+  const d=mode==='draft'?loadDraft():null;
+  const coreIds=new Set(categoryAttractions('core',selectedPark).map(a=>a.id));
+  let selected=new Set((mode==='draft'?(d.excluded||[]):[...excludedSet()]).filter(id=>coreIds.has(id)));
   const render=()=>{
-    dialogHost.innerHTML=`<div class="dialogBackdrop"><div class="dialog"><h3>Excluded attractions</h3><div class="ktpDialogTabs"><button class="btn ${tab==='core'?'btnPrimary':''}" data-cat="core">Core</button><button class="btn ${tab==='bonus'?'btnPrimary':''}" data-cat="bonus">Bonus</button></div>
-      <div class="excludeList">${categoryAttractions(tab,selectedPark).map(a=>`<label class="excludeRow"><input type="checkbox" value="${a.id}" ${selected.has(a.id)?'checked':''} ${mode==='active'&&completedMap().has(a.id)?'disabled':''}><span>${escapeHtml(a.name)}</span></label>`).join('')}</div>
+    dialogHost.innerHTML=`<div class="dialogBackdrop"><div class="dialog"><h3>Excluded Core attractions</h3>
+      <div class="excludeList">${categoryAttractions('core',selectedPark).map(a=>`<label class="excludeRow"><input type="checkbox" value="${a.id}" ${selected.has(a.id)?'checked':''} ${mode==='active'&&completedMap().has(a.id)?'disabled':''}><span>${escapeHtml(a.name)}</span></label>`).join('')}</div>
       <div class="btnRow"><button id="saveExclusions" class="btn btnPrimary">Save</button><button id="cancelExclusions" class="btn">Cancel</button></div></div></div>`;
-    dialogHost.querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{tab=b.dataset.cat;render();});
     dialogHost.querySelectorAll('.excludeRow input').forEach(c=>c.onchange=()=>{c.checked?selected.add(c.value):selected.delete(c.value);});
     document.getElementById('cancelExclusions').onclick=closeDialog;
     document.getElementById('saveExclusions').onclick=()=>{
