@@ -11,10 +11,10 @@ const PARKS = {
   ak: { id:'ak', name:'Animal Kingdom', theme:'#166534', wiki:'1c84a229-8862-4648-9c71-378ddd2c7693' }
 };
 const REQUIRED_TWEET_TEXT = {
-  mk: '@thepiratekenny #ExtremeMagicKingdomChallenge',
-  ep: '@thepiratekenny #ExtremeEpcotChallenge',
-  hs: '@thepiratekenny #ExtremeHollywoodStudiosChallenge',
-  ak: '@thepiratekenny #ExtremeAnimalKingdomChallenge'
+  mk: '@thepiratekenny #ExtremeTourMK',
+  ep: '@thepiratekenny #ExtremeTourEP',
+  hs: '@thepiratekenny #ExtremeTourHS',
+  ak: '@thepiratekenny #ExtremeTourAK'
 };
 
 const CHALLENGE_RULES = [
@@ -139,7 +139,7 @@ function closeMenu(){moreBtn.setAttribute('aria-expanded','false');moreMenu.setA
 function showChallengeSelector(){
   selectedPark=null; showHeader(false); applyTheme('mk');
   app.innerHTML=`<div class="stack startPage">
-    <div class="card"><div class="h1">KTP Ultimate</div><p class="p">Choose the park for today’s challenge.</p></div>
+    <div class="card"><div class="h1">KTP Extreme Tour</div><p class="p">Choose the park for today’s challenge.</p></div>
     <div class="card"><div class="h1">Choose your park</div><div class="ktpParkGrid">
       ${Object.values(PARKS).map(p=>`<button class="btn btnPrimary ktpParkButton" data-park="${p.id}">${escapeHtml(p.name)}</button>`).join('')}
     </div></div>
@@ -154,7 +154,7 @@ function saveDraft(d){ localStorage.setItem(draftKey(),JSON.stringify(d)); }
 function showStartPage(){
   showHeader(false); applyTheme(selectedPark); const p=parkData(selectedPark), d=loadDraft();
   app.innerHTML=`<div class="stack startPage">
-    <div class="card"><div class="h1">KTP Ultimate ${escapeHtml(p.name)} Challenge</div><div class="btnRow startPageNav"><button id="backSelector" class="btn btnPrimary" type="button">Back to challenge selector</button><button id="rulesBtn" class="btn btnPrimary" type="button">Rules</button></div></div>
+    <div class="card"><div class="h1">KTP Extreme Tour ${escapeHtml(p.name)}</div><div class="btnRow startPageNav"><button id="backSelector" class="btn btnPrimary" type="button">Back to challenge selector</button><button id="rulesBtn" class="btn btnPrimary" type="button">Rules</button></div></div>
     <div class="card"><div class="h1">Start a new challenge</div>
       <div class="formRow"><div class="label">Tweet mode</div>
         <label class="btn btnInverse optionRow"><input type="radio" name="tweetMode" value="original" ${d.tweetMode!=='twofer'?'checked':''}> <span>Single mode: tweet every attraction</span></label>
@@ -297,7 +297,7 @@ function openRules(){
   const p=parkData(selectedPark);
   const required=REQUIRED_TWEET_TEXT[selectedPark]||'';
   const list=CHALLENGE_RULES.map(r=>`<li>${escapeHtml(r)}</li>`).join('');
-  openDialog({title:`KTP Ultimate ${p.name} Challenge Rules`,content:`<div class="rulesScroll"><p><strong>Required X text:</strong> ${escapeHtml(required)}</p><ol>${list}</ol><h4>Stop location</h4><p>${escapeHtml(STOP_LOCATIONS[selectedPark]||'')}</p><h4>Ranking</h4><p>Complete all operating Core attractions to qualify. Rankings are first by total attractions experienced (Core plus Bonus), then by total touring time.</p></div>`,buttons:[{text:'Close',primary:true,action:closeDialog}]});
+  openDialog({title:`KTP Extreme Tour ${p.name} Rules`,content:`<div class="rulesScroll"><p><strong>Required X text:</strong> ${escapeHtml(required)}</p><ol>${list}</ol><h4>Stop location</h4><p>${escapeHtml(STOP_LOCATIONS[selectedPark]||'')}</p><h4>Ranking</h4><p>Complete all operating Core attractions to qualify. Rankings are first by total attractions experienced (Core plus Bonus), then by total touring time.</p></div>`,buttons:[{text:'Close',primary:true,action:closeDialog}]});
 }
 
 function openSettings(){
@@ -343,14 +343,14 @@ async function shareUpdate(){
 }
 async function renderUpdateImage(){
   const s=statusFor(); const width=1080,pad=70,rowH=72,headerH=190,height=headerH+pad+(active.events.length*rowH)+70;
-  const c=document.createElement('canvas');c.width=width;c.height=height;const x=c.getContext('2d');x.fillStyle='#ffffff';x.fillRect(0,0,width,height);x.fillStyle='#111827';x.font='bold 48px system-ui';x.fillText(`KTP Ultimate — ${parkData(active.parkId).name}`,pad,75);x.font='32px system-ui';const headerText=`Total ${s.total} (Core ${s.coreDone}/${s.coreRequired})`;x.fillText(headerText,pad,130);x.font='26px system-ui';x.fillText(formatDate(active.startedAt),pad,170);
+  const c=document.createElement('canvas');c.width=width;c.height=height;const x=c.getContext('2d');x.fillStyle='#ffffff';x.fillRect(0,0,width,height);x.fillStyle='#111827';x.font='bold 48px system-ui';x.fillText(`KTP Extreme Tour — ${parkData(active.parkId).name}`,pad,75);x.font='32px system-ui';const headerText=`Total ${s.total} (Core ${s.coreDone}/${s.coreRequired})`;x.fillText(headerText,pad,130);x.font='26px system-ui';x.fillText(formatDate(active.startedAt),pad,170);
   active.events.forEach((e,i)=>{const y=headerH+pad+i*rowH;x.fillStyle=i%2?'#f8fafc':'#f1f5f9';x.fillRect(pad-15,y-40,width-pad*2+30,58);x.fillStyle='#111827';x.font='26px system-ui';const label=e.category==='bonus'?'Bonus':'Core';x.fillText(`${i+1}. ${e.attractionName}  •  ${label}  •  ${formatTime(e.timeISO)}`,pad,y);});
-  const blob=await new Promise((resolve,reject)=>c.toBlob(b=>b?resolve(b):reject(new Error('blob')),'image/png')); return {blob,headerText:`KTP Ultimate ${parkData(active.parkId).name}: ${headerText}`};
+  const blob=await new Promise((resolve,reject)=>c.toBlob(b=>b?resolve(b):reject(new Error('blob')),'image/png')); return {blob,headerText:`KTP Extreme Tour ${parkData(active.parkId).name}: ${headerText}`};
 }
 function showImageDialog(blob,headerText){
-  const url=URL.createObjectURL(blob); const file=()=>new File([blob],'ktp-ultimate-update.png',{type:'image/png'}); const canShare=!!(navigator.share&&navigator.canShare&&navigator.canShare({files:[file()]}));
-  dialogHost.innerHTML=`<div class="dialogBackdrop updateImageDialogBackdrop"><div class="dialog updateImageDialog"><div class="updateImagePreview"><img src="${url}" alt="KTP Ultimate update image"></div><div class="btnRow updateImageActions">${canShare?'<button id="shareImg" class="btn btnPrimary">Share image</button>':''}<button id="downloadImg" class="btn ${canShare?'':'btnPrimary'}">Download image</button><button id="closeImg" class="btn">Close</button></div></div></div>`;
-  document.getElementById('closeImg').onclick=()=>{URL.revokeObjectURL(url);closeDialog();};document.getElementById('downloadImg').onclick=()=>{const a=document.createElement('a');a.href=url;a.download='ktp-ultimate-update.png';a.click();};document.getElementById('shareImg')?.addEventListener('click',async()=>{try{await navigator.share({files:[file()],text:headerText});}catch{}});
+  const url=URL.createObjectURL(blob); const file=()=>new File([blob],'ktp-extreme-tour-update.png',{type:'image/png'}); const canShare=!!(navigator.share&&navigator.canShare&&navigator.canShare({files:[file()]}));
+  dialogHost.innerHTML=`<div class="dialogBackdrop updateImageDialogBackdrop"><div class="dialog updateImageDialog"><div class="updateImagePreview"><img src="${url}" alt="KTP Extreme Tour update image"></div><div class="btnRow updateImageActions">${canShare?'<button id="shareImg" class="btn btnPrimary">Share image</button>':''}<button id="downloadImg" class="btn ${canShare?'':'btnPrimary'}">Download image</button><button id="closeImg" class="btn">Close</button></div></div></div>`;
+  document.getElementById('closeImg').onclick=()=>{URL.revokeObjectURL(url);closeDialog();};document.getElementById('downloadImg').onclick=()=>{const a=document.createElement('a');a.href=url;a.download='ktp-extreme-tour-update.png';a.click();};document.getElementById('shareImg')?.addEventListener('click',async()=>{try{await navigator.share({files:[file()],text:headerText});}catch{}});
 }
 
 function openDialog({title,body='',content='',buttons=[]}){dialogHost.innerHTML=`<div class="dialogBackdrop"><div class="dialog"><h3>${escapeHtml(title)}</h3>${body?`<p>${escapeHtml(body)}</p>`:''}${content}<div class="btnRow" style="margin-top:12px">${buttons.map((b,i)=>`<button data-dialog="${i}" class="btn ${b.primary?'btnPrimary':''}">${escapeHtml(b.text)}</button>`).join('')}</div></div></div>`;buttons.forEach((b,i)=>dialogHost.querySelector(`[data-dialog="${i}"]`).onclick=b.action);}
